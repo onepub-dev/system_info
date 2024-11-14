@@ -87,9 +87,22 @@ abstract class SysInfo {
 
   /// Returns the amount of free physical memory in bytes.
   ///
+  /// This is the amount of physical memory that is unused (or empty).
+  /// This is different from available memory, often lesser
+  ///
   ///     print(SysInfo.getFreePhysicalMemory());
   ///     => 3755331584
   static int getFreePhysicalMemory() => pm.getFreePhysicalMemory();
+
+
+  /// Returns the amount of available physical memory in bytes.
+  ///
+  /// This is the amount of physical memory that can be used by the system.
+  /// Most "diagnostic apps" show this as the "free memory"
+  ///
+  ///    print(SysInfo.getAvailablePhysicalMemory());
+  ///    => 3755331584
+  static int getAvailablePhysicalMemory() => pm.getAvailablePhysicalMemory();
 
   /// Returns the amount of free virtual memory in bytes.
   ///

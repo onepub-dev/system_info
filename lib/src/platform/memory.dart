@@ -28,6 +28,31 @@ int getFreePhysicalMemory() {
   }
 }
 
+int getAvailablePhysicalMemory() {
+  switch (Platform.operatingSystem) {
+    case 'android':
+    case 'linux':
+      final data = (fluent(exec('cat', ['/proc/meminfo']))
+        ..trim()
+        ..stringToMap(':'))
+          .mapValue;
+      final value = (fluent(data['MemAvailable'])
+        ..split(' ')
+        ..elementAt(0)
+        ..parseInt())
+          .intValue;
+      return value * 1024;
+    case 'macos':
+      return getFreeVirtualMemory();
+    case 'windows':
+      final data = wmicGetValueAsMap('OS', ['FreePhysicalMemory'])!;
+      final value = (fluent(data['FreePhysicalMemory'])..parseInt()).intValue;
+      return value * 1024;
+    default:
+      notSupportedError();
+  }
+}
+
 int getFreeVirtualMemory() {
   switch (Platform.operatingSystem) {
     case 'android':
