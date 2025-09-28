@@ -30,6 +30,10 @@ void main() {
       ': ${SysInfo.getFreeVirtualMemory() ~/ megaByte} MB');
   print('Virtual memory size     '
       ': ${SysInfo.getVirtualMemorySize() ~/ megaByte} MB');
+  print('Total storage           '
+      ': ${SysInfo.getTotalStorage() ~/ megaByte} MB');
+  print('Free storage            '
+      ': ${SysInfo.getFreeStorage() ~/ megaByte} MB');
 }
 
 const int megaByte = 1024 * 1024;
