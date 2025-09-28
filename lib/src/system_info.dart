@@ -3,6 +3,7 @@ import 'platform/cpu.dart';
 import 'platform/kernel.dart';
 import 'platform/memory.dart' as pm;
 import 'platform/operating_system.dart';
+import 'platform/storage.dart' as stg;
 import 'platform/user.dart';
 import 'platform/userspace.dart';
 import 'processor_architecture.dart';
@@ -94,7 +95,6 @@ abstract class SysInfo {
   ///     => 3755331584
   static int getFreePhysicalMemory() => pm.getFreePhysicalMemory();
 
-
   /// Returns the amount of available physical memory in bytes.
   ///
   /// This is the amount of physical memory that can be used by the system.
@@ -127,4 +127,16 @@ abstract class SysInfo {
   ///     print(SysInfo.getVirtualMemorySize());
   ///     => 123456
   static int getVirtualMemorySize() => pm.getVirtualMemorySize();
+
+  /// Returns the total storage in bytes.
+  ///
+  ///    print(SysInfo.getTotalStorage());
+  ///    => 510745636864
+  static int getTotalStorage() => stg.getTotalStorage();
+
+  /// Returns the free storage in bytes.
+  ///
+  ///   print(SysInfo.getFreeStorage());
+  ///   => 255868657664
+  static int getFreeStorage() => stg.getFreeStorage();
 }
