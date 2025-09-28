@@ -66,7 +66,6 @@ doc/api/
 /dev/integration_tests/**/xcuserdata
 /dev/integration_tests/**/Pods
 /packages/flutter/coverage/
-version
 analysis_benchmark.json
 
 # packages file containing multi-root paths

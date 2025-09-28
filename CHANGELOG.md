@@ -1,3 +1,12 @@
+# 4.1.0
+- Merge pull request #14 from GabrielTorelo/feat/storage_information
+- chore(example): adding the storage data to the example
+- feat(system_info): provides and comments functions to get data from storage
+- feat(storage): creates functions to get total storage and available storage
+- feat(utils): creates function to obtain 'StatFs' values and convert to map
+- Merge pull request #11 from dev-kasibhatla/system_info3-compatibility
+- Add getAvailablePhysicalMemory()
+
 # 4.0.0
 - upgraded to support dart 3.0
 - removed dependency on deprecated file_utils package by coping

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_catches_without_on_clauses
-
 import 'dart:io';
 
 import 'package:path/path.dart' as pathos;
@@ -29,7 +27,6 @@ String? resolveLink(String path) {
     }
 
     try {
-      // ignore: parameter_assignments
       path = Link(path).resolveSymbolicLinksSync();
     } catch (e) {
       return null;
@@ -40,17 +37,17 @@ String? resolveLink(String path) {
 }
 
 void parseLdConf(String path, List<String> paths, Set<String> processed) {
-  final _path = resolveLink(path);
-  if (_path == null) {
+  final path0 = resolveLink(path);
+  if (path0 == null) {
     return;
   }
 
-  final file = File(_path);
+  final file = File(path0);
   if (!file.existsSync()) {
     return;
   }
 
-  final dir = pathos.dirname(_path);
+  final dir = pathos.dirname(path0);
   for (var line in file.readAsLinesSync()) {
     line = line.trim();
     final index = line.indexOf('#');

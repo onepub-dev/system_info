@@ -1,3 +1,7 @@
+analyzer:
+  errors:
+    avoid_catches_without_on_clauses: ignore
+    avoid_classes_with_only_static_members: ignore
 include: package:lint_hard/all.yaml
 
 linter:

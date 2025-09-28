@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:path/path.dart' as pathos;
 
-// ignore: avoid_classes_with_only_static_members
 class FilePath {
   static final bool _isWindows = Platform.isWindows;
 
@@ -21,7 +20,7 @@ class FilePath {
       return path;
     }
 
-    // TODO: add support of '~user' format.
+    // TODO(unknown): add support of '~user' format.
     String home;
     if (_isWindows) {
       final drive = Platform.environment['HOMEDRIVE'];

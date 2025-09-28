@@ -1,5 +1,3 @@
-// ignore_for_file: exhaustive_cases
-
 import 'dart:io';
 
 import 'package:globbing/glob_filter.dart';
@@ -9,7 +7,6 @@ import 'package:path/path.dart' as pathos;
 import 'file_list.dart';
 import 'file_path.dart';
 
-// ignore: avoid_classes_with_only_static_members
 class FileUtils {
   static final bool _isWindows = Platform.isWindows;
 
@@ -61,7 +58,6 @@ class FileUtils {
 
     try {
       Directory.current = directory;
-      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       return false;
     }
@@ -266,7 +262,6 @@ class FileUtils {
       } else {
         try {
           directory.createSync(recursive: recursive);
-          // ignore: avoid_catches_without_on_clauses
         } catch (e) {
           result = false;
         }
@@ -329,6 +324,12 @@ class FileUtils {
       case FileSystemEntityType.link:
         entity = Link(src);
         break;
+
+      case FileSystemEntityType.notFound:
+      case FileSystemEntityType.pipe:
+      case FileSystemEntityType.unixDomainSock:
+        entity = Link(src);
+        break;
     }
 
     if (entity == null) {
@@ -337,7 +338,6 @@ class FileUtils {
 
     try {
       entity.renameSync(dest);
-      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       return false;
     }
@@ -402,7 +402,6 @@ class FileUtils {
             if (recursive) {
               try {
                 entity.deleteSync(recursive: recursive);
-                // ignore: avoid_catches_without_on_clauses
               } catch (e) {
                 result = false;
               }
@@ -414,7 +413,6 @@ class FileUtils {
           } else {
             try {
               entity.deleteSync();
-              // ignore: avoid_catches_without_on_clauses
             } catch (e) {
               result = false;
             }
@@ -461,7 +459,6 @@ class FileUtils {
         if (dirempty(name)) {
           try {
             Directory(name).deleteSync();
-            // ignore: avoid_catches_without_on_clauses
           } catch (e) {
             result = false;
           }
@@ -472,7 +469,6 @@ class FileUtils {
             } else {
               try {
                 Directory(name).deleteSync(recursive: true);
-                // ignore: avoid_catches_without_on_clauses
               } catch (e) {
                 result = false;
               }
@@ -529,7 +525,6 @@ class FileUtils {
     final symlink = Link(link);
     try {
       symlink.createSync(target);
-      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       return false;
     }
@@ -656,7 +651,6 @@ class FileUtils {
         try {
           file.createSync();
           return true;
-          // ignore: avoid_catches_without_on_clauses
         } catch (e) {
           if (create) {
             return false;

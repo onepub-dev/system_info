@@ -6,6 +6,18 @@ import 'package:globbing/glob_lister.dart';
 import 'file_path.dart';
 
 class FileList extends Object with ListMixin<String> {
+  static final bool _isWindows = Platform.isWindows;
+
+  final Directory directory;
+
+  late bool _caseSensitive;
+
+  late List<String> _files;
+
+  void Function(String path)? _notify;
+
+  late String _pattern;
+
   /// Creates file list.
   ///
   /// Parameters:
@@ -32,18 +44,6 @@ class FileList extends Object with ListMixin<String> {
     _pattern = FilePath.expand(pattern);
     _files = _getFiles();
   }
-
-  static final bool _isWindows = Platform.isWindows;
-
-  final Directory directory;
-
-  late bool _caseSensitive;
-
-  late List<String> _files;
-
-  void Function(String path)? _notify;
-
-  late String _pattern;
 
   /// Returns the length.
   @override
@@ -94,7 +94,6 @@ class FileList extends Object with ListMixin<String> {
           .listSync(followLinks: followLinks ?? true)
           .map((e) => e.path)
           .toList();
-      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       result = <String>[];
     }

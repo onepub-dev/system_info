@@ -9,8 +9,6 @@ import 'platform/userspace.dart';
 import 'processor_architecture.dart';
 
 abstract class SysInfo {
-  SysInfo._internal();
-
   /// Returns the architecture of the kernel by obtaining
   /// the [rawKernelArchitecture]
   /// and converting it to a high level ProcessorArchitecture.
@@ -85,6 +83,8 @@ abstract class SysInfo {
   ///     print(SysInfo.userSpaceBitness);
   ///     => 32
   static final int userSpaceBitness = getUserSpaceBitness();
+
+  SysInfo._internal();
 
   /// Returns the amount of free physical memory in bytes.
   ///

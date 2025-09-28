@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses
 //, strict_raw_type
 
 import 'dart:io';
@@ -6,9 +5,9 @@ import 'dart:io';
 Fluent fluent(Object? value) => Fluent(value);
 
 class Fluent {
-  Fluent(this.value);
-
   dynamic value;
+
+  Fluent(this.value);
 
   List<Map<String, String>>? get groupsValue {
     if (value is List<Map<String, String>>) {
@@ -26,6 +25,7 @@ class Fluent {
     return 0;
   }
 
+  // Fluent api requires dynamic type
   // ignore: strict_raw_type
   List get listValue {
     if (value is List) {
@@ -35,6 +35,7 @@ class Fluent {
     return <dynamic>[];
   }
 
+  // Fluent api requires dynamic type
   // ignore: strict_raw_type
   Map get mapValue {
     if (value is Map) {
@@ -54,6 +55,8 @@ class Fluent {
 
   Fluent operator [](Object key) {
     try {
+      // Fluent api requires dynamic type
+      // ignore: avoid_dynamic_calls
       value = value[key];
     } catch (e) {
       value = null;
@@ -63,6 +66,8 @@ class Fluent {
 
   void elementAt(int index, [Object? defaultValue]) {
     try {
+      // Fluent api requires dynamic type
+      // ignore: avoid_dynamic_calls
       value = value[index];
     } catch (e) {
       value = null;
@@ -88,6 +93,8 @@ class Fluent {
 
   void last() {
     if (value is Iterable) {
+      // Fluent api requires dynamic type
+      // ignore: avoid_dynamic_calls
       value = value.last;
     } else {
       value = null;
