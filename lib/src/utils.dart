@@ -120,6 +120,20 @@ Map<String, String>? wmicGetValueAsMap(String section, List<String> fields,
       .mapValue as Map<String, String>?;
 }
 
+String? _statFsGetValue(String mountPoint, List<String> fields) {
+  final format = fields.map((f) => '$f=%$f').join('\n');
+  return exec('stat', ['-f', '-c', format, mountPoint]);
+}
+
+Map<String, String>? statFsGetValueAsMap(
+    String mountPoint, List<String> fields) {
+  final string = _statFsGetValue(mountPoint, fields);
+  return (fluent(string)
+        ..stringToList()
+        ..listToMap('='))
+      .mapValue as Map<String, String>?;
+}
+
 Never notSupportedError() {
   throw UnsupportedError('Unsupported operating system.');
 }
