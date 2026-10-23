@@ -1,3 +1,13 @@
+# 4.2.0
+- Fix #6: return macOS total physical memory in bytes without multiplying by page size.
+- Fix #7: recognize Windows AMD64 as x86_64.
+- Fix #12: use PowerShell CIM for Windows memory queries without requiring WMIC.
+  Queries retain their units and WMI property semantics. Failed or invalid queries
+  now throw StateError instead of silently returning zero; valid zero remains zero.
+  Windows PowerShell and the local CIM providers are required. Other Windows
+  information queries may still require WMIC. See README for limits and latency.
+- Add regression tests and Linux/macOS/Windows CI. Retain the Dart 2.19 library SDK floor.
+
 # 4.1.0
 - Merge pull request #14 from GabrielTorelo/feat/storage_information
 - chore(example): adding the storage data to the example

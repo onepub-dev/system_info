@@ -1,9 +1,11 @@
 analyzer:
   errors:
+    # lint_hard 6 still declares the deprecated legacy plugin API.
+    included_file_warning: ignore
     avoid_catches_without_on_clauses: ignore
     avoid_classes_with_only_static_members: ignore
 include: package:lint_hard/all.yaml
 
 linter:
   rules:
-    avoid_print: false  
+    avoid_print: false

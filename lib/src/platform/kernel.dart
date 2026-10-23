@@ -23,8 +23,9 @@ int getKernelBitness() {
         parseLdConf(path, paths, <String>{});
       }
 
-      paths.add('/lib');
-      paths.add('/lib64');
+      paths
+        ..add('/lib')
+        ..add('/lib64');
       for (final path in paths) {
         final files = FileUtils.glob(pathos.join(path, 'libc.so.*'));
         for (final filePath in files) {
@@ -220,6 +221,8 @@ final processorToArchitecure = <String, ProcessorArchitecture>{
 // 'unicore32'
   'i386': ProcessorArchitecture.x86,
   'i686': ProcessorArchitecture.x86,
+  // Windows PROCESSOR_ARCHITECTURE / PROCESSOR_ARCHITEW6432.
+  'AMD64': ProcessorArchitecture.x86_64,
   'x86_64': ProcessorArchitecture.x86_64
 // 'xtensa'
 };

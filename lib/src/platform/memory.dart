@@ -2,6 +2,8 @@ import 'dart:io';
 
 import '../fluent.dart';
 import '../utils.dart';
+import 'memory_macos.dart';
+import 'memory_windows.dart';
 
 int getFreePhysicalMemory() {
   switch (Platform.operatingSystem) {
@@ -20,9 +22,7 @@ int getFreePhysicalMemory() {
     case 'macos':
       return getFreeVirtualMemory();
     case 'windows':
-      final data = wmicGetValueAsMap('OS', ['FreePhysicalMemory'])!;
-      final value = (fluent(data['FreePhysicalMemory'])..parseInt()).intValue;
-      return value * 1024;
+      return getWindowsMemory(WindowsMemoryMetric.freePhysical);
     default:
       notSupportedError();
   }
@@ -33,21 +33,19 @@ int getAvailablePhysicalMemory() {
     case 'android':
     case 'linux':
       final data = (fluent(exec('cat', ['/proc/meminfo']))
-        ..trim()
-        ..stringToMap(':'))
+            ..trim()
+            ..stringToMap(':'))
           .mapValue;
       final value = (fluent(data['MemAvailable'])
-        ..split(' ')
-        ..elementAt(0)
-        ..parseInt())
+            ..split(' ')
+            ..elementAt(0)
+            ..parseInt())
           .intValue;
       return value * 1024;
     case 'macos':
       return getFreeVirtualMemory();
     case 'windows':
-      final data = wmicGetValueAsMap('OS', ['FreePhysicalMemory'])!;
-      final value = (fluent(data['FreePhysicalMemory'])..parseInt()).intValue;
-      return value * 1024;
+      return getWindowsMemory(WindowsMemoryMetric.freePhysical);
     default:
       notSupportedError();
   }
@@ -87,9 +85,7 @@ int getFreeVirtualMemory() {
           .intValue;
       return free * pageSize;
     case 'windows':
-      final data = wmicGetValueAsMap('OS', ['FreeVirtualMemory'])!;
-      final free = (fluent(data['FreeVirtualMemory'])..parseInt()).intValue;
-      return free * 1024;
+      return getWindowsMemory(WindowsMemoryMetric.freeVirtual);
     default:
       notSupportedError();
   }
@@ -110,20 +106,9 @@ int getTotalPhysicalMemory() {
           .intValue;
       return value * 1024;
     case 'macos':
-      final pageSize = (fluent(exec('sysctl', ['-n', 'hw.pagesize']))
-            ..trim()
-            ..parseInt())
-          .intValue;
-      final size = (fluent(exec('sysctl', ['-n', 'hw.memsize']))
-            ..trim()
-            ..parseInt())
-          .intValue;
-      return size * pageSize;
+      return getMacOsTotalPhysicalMemory();
     case 'windows':
-      final data =
-          wmicGetValueAsMap('ComputerSystem', ['TotalPhysicalMemory'])!;
-      final value = (fluent(data['TotalPhysicalMemory'])..parseInt()).intValue;
-      return value;
+      return getWindowsMemory(WindowsMemoryMetric.totalPhysical);
     default:
       notSupportedError();
   }
@@ -179,10 +164,7 @@ int getTotalVirtualMemory() {
           .intValue;
       return (free + active + inactive + speculative + wired) * pageSize;
     case 'windows':
-      final data = wmicGetValueAsMap('OS', ['TotalVirtualMemorySize'])!;
-      final value =
-          (fluent(data['TotalVirtualMemorySize'])..parseInt()).intValue;
-      return value * 1024;
+      return getWindowsMemory(WindowsMemoryMetric.totalVirtual);
     default:
       notSupportedError();
   }
@@ -200,10 +182,7 @@ int getVirtualMemorySize() {
       final size = (fluent(data.elementAt(1))..parseInt()).intValue;
       return size * 1024;
     case 'windows':
-      final data = wmicGetValueAsMap('Process', ['VirtualSize'],
-          where: ["Handle='$pid'"])!;
-      final value = (fluent(data['VirtualSize'])..parseInt()).intValue;
-      return value;
+      return getWindowsMemory(WindowsMemoryMetric.processVirtual);
     default:
       notSupportedError();
   }
